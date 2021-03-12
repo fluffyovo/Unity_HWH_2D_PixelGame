@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 965895498}
   - component: {fileID: 965895497}
   - component: {fileID: 965895499}
+  - component: {fileID: 965895500}
   m_Layer: 0
   m_Name: "\u73A9\u5BB6"
   m_TagString: Untagged
@@ -674,6 +675,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &965895500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965895496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4587da981cba6d84b8a777aa8f450f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  speed: 10.5
+  isDead: 0
+  cName: "\u8C93\u54AA"
+  hp: 100
+  attack: 20
+  exp: 0
+  coin: 0
 --- !u!1001 &1129327457
 PrefabInstance:
   m_ObjectHideFlags: 0
