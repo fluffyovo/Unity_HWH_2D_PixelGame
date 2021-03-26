@@ -37,17 +37,27 @@ public class Player : MonoBehaviour
     public Transform tra;
     [Header("動畫元件")]
     public Animator ani;
+    [Header("偵測攻擊範圍")]
+    public float rangeAttack = 1.2f;
+
+    // 事件 : 繪製圖示
+    private void OnDrawGizmos()
+    {
+        //指定圖示顏色 (紅，綠，藍，透明）
+        Gizmos.color = new Color(1, 0, 0, 0.2f);
+        //繪製圖示 球體(中心點，半徑)
+        Gizmos.DrawSphere(transform.position, rangeAttack);
+    }
 
     // 方法語法 Method - 儲存複雜的程式區塊或演算法
     // 修飾詞 類型 名稱() { 程式區塊或演算法}
     // void 無類型
-    
+
     /// <summary>
     /// 移動
     /// </summary>
     private void Move()
     {
-        print("移動");
         float h = joystick.Horizontal;
         float v = joystick.Vertical;
 
@@ -56,9 +66,15 @@ public class Player : MonoBehaviour
         ani.SetFloat("垂直", v);
     }
 
-    private void Attack()
+    //要被按鈕呼叫必須設公開
+    public void Attack()
     {
+        print("攻擊");
 
+        // 2D物理 圓形碰撞 (中心點，半徑，方向）
+        RaycastHit2D hit =  Physics2D.CircleCast(transform.position, rangeAttack, -transform.up);
+
+        print("碰到的物件:" + hit.collider.name);
     }
 
     private void Hit() 
