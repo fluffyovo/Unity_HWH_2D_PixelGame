@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     //要被按鈕呼叫必須設公開
     public void Attack()
     {
-
+        // 音效來源.播放一次(音效片段，音量）
         aud.PlayOneShot(soundAttack,1.2f);
 
         // 2D物理 圓形碰撞 (中心點，半徑，方向，距離，圖層編號－寫法為"１＜＜指定圖層編號"）
