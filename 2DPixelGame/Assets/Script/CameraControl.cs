@@ -16,19 +16,21 @@ public class CameraControl : MonoBehaviour
         Track();
     }
 
-
+    /// <summary>
+    /// 追蹤
+    /// </summary>
     private void Track()
     {
-        Vector3 poscam = transform.position;   // 取得 攝影機座標
-        Vector3 pospla = player.position;      // 取得 玩家座標
+        Vector3 posCam = transform.position;   // 取得 攝影機座標
+        Vector3 posPla = player.position;      // 取得 玩家座標
 
-        poscam = Vector3.Lerp(poscam, pospla, 0.5f * speed * Time.deltaTime);
-        poscam.z = -10;
+        posCam = Vector3.Lerp(posCam, posPla, 0.5f * speed * Time.deltaTime);
+        posCam.z = -10;
 
+        // Mathf.Clamp (要夾住的值，最小值，最大值）
+        posCam.x = Mathf.Clamp(posCam.x, limitX.x, limitX.y);
+        posCam.y = Mathf.Clamp(posCam.y, limitY.x, limitY.y);
 
-        poscam.x = Mathf.Clamp(poscam.x, limitX.x, limitX.y);
-        poscam.y = Mathf.Clamp(poscam.y, limitY.x, limitY.y);
-
-        transform.position = poscam;           // 更新攝影機座標
+        transform.position = posCam;           // 更新攝影機座標
     }
 }

@@ -131,7 +131,17 @@ PrefabInstance:
     - target: {fileID: 2055102311959635369, guid: 99597c7b4aa47494fb2b6061505735da,
         type: 3}
       propertyPath: m_Name
-      value: PF Props Chest
+      value: "\u5BF6\u7BB1"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055102311959635369, guid: 99597c7b4aa47494fb2b6061505735da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055102311959635369, guid: 99597c7b4aa47494fb2b6061505735da,
+        type: 3}
+      propertyPath: m_TagString
+      value: "\u9053\u5177"
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: 99597c7b4aa47494fb2b6061505735da,
         type: 3}
@@ -845,6 +855,7 @@ GameObject:
   - component: {fileID: 965895500}
   - component: {fileID: 965895502}
   - component: {fileID: 965895501}
+  - component: {fileID: 965895503}
   m_Layer: 0
   m_Name: "\u73A9\u5BB6"
   m_TagString: Untagged
@@ -960,6 +971,8 @@ MonoBehaviour:
   tra: {fileID: 965895498}
   ani: {fileID: 965895499}
   rangeAttack: 1.2
+  aud: {fileID: 965895503}
+  soundAttack: {fileID: 8300000, guid: 89f71a3c5d40baf4ea08ad6df6240ae0, type: 3}
 --- !u!50 &965895501
 Rigidbody2D:
   serializedVersion: 4
@@ -997,6 +1010,102 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01, y: -0.1}
   m_Size: {x: 0.5, y: 0.7}
   m_Direction: 0
+--- !u!82 &965895503
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965895496}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1048008681 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
@@ -1155,7 +1264,7 @@ GameObject:
   - component: {fileID: 1361969603}
   - component: {fileID: 1361969602}
   - component: {fileID: 1361969601}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u6575\u4EBA1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4737,7 +4846,17 @@ PrefabInstance:
     - target: {fileID: 2577585254963922480, guid: 63ee4b6a40c55fd429759b807832ded1,
         type: 3}
       propertyPath: m_Name
-      value: PF Props Pot B
+      value: "\u9676\u58FA"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2577585254963922480, guid: 63ee4b6a40c55fd429759b807832ded1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2577585254963922480, guid: 63ee4b6a40c55fd429759b807832ded1,
+        type: 3}
+      propertyPath: m_TagString
+      value: "\u9053\u5177"
       objectReference: {fileID: 0}
     - target: {fileID: 2577585254963922481, guid: 63ee4b6a40c55fd429759b807832ded1,
         type: 3}

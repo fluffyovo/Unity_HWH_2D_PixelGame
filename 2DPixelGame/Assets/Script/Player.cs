@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
     public Animator ani;
     [Header("偵測攻擊範圍")]
     public float rangeAttack = 1.2f;
+    [Header("音效來源")]
+    public AudioSource aud;
+    [Header("攻擊音效")]
+    public AudioClip soundAttack;
 
     // 事件 : 繪製圖示
     private void OnDrawGizmos()
@@ -69,11 +73,14 @@ public class Player : MonoBehaviour
     //要被按鈕呼叫必須設公開
     public void Attack()
     {
-        print("攻擊");
 
-        // 2D物理 圓形碰撞 (中心點，半徑，方向）
-        RaycastHit2D hit =  Physics2D.CircleCast(transform.position, rangeAttack, -transform.up);
+        aud.PlayOneShot(soundAttack,1.2f);
 
+        // 2D物理 圓形碰撞 (中心點，半徑，方向，距離，圖層編號－寫法為"１＜＜指定圖層編號"）
+        RaycastHit2D hit =  Physics2D.CircleCast(transform.position, rangeAttack, -transform.up, 0, 1 << 8);
+
+        // 如果 碰到的物件 標籤 為 道具 就刪除(碰到的碰撞器的遊戲物件)
+        if (hit.collider.tag == "道具") Destroy(hit.collider.gameObject);
         print("碰到的物件:" + hit.collider.name);
     }
 
