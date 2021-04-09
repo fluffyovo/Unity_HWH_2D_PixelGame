@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -79,9 +80,15 @@ public class Player : MonoBehaviour
         // 2D物理 圓形碰撞 (中心點，半徑，方向，距離，圖層編號－寫法為"１＜＜指定圖層編號"）
         RaycastHit2D hit =  Physics2D.CircleCast(transform.position, rangeAttack, -transform.up, 0, 1 << 8);
 
+        /*
         // 如果 碰到的物件 標籤 為 道具 就刪除(碰到的碰撞器的遊戲物件)
-        if (hit.collider.tag == "道具") Destroy(hit.collider.gameObject);
+        if (hit &&　hit.collider.tag == "道具") Destroy(hit.collider.gameObject);
         print("碰到的物件:" + hit.collider.name);
+        */
+
+        // 如果 碰到的物件 標籤 為 道具 就 取得道具腳本並呼叫掉落道具方法
+        if (hit && hit.collider.tag == "道具") hit.collider.GetComponent<item>().DropProp();
+        // print("碰到的物件:" + hit.collider.name);
     }
 
     private void Hit() 
@@ -106,5 +113,23 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
+    }
+
+    [Header("吃金幣音效")]
+    public AudioClip SoundEat;
+    [Header("吃金幣數量")]
+    public Text textCoin;
+
+    // 觸發事件 - 進入：兩個物件必須有一個勾選Is Trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "金條")
+        {
+            coin++;
+            aud.PlayOneShot(SoundEat);
+            Destroy(collision.gameObject);
+            textCoin.text = "金幣：" + coin;
+
+        }
     }
 }
