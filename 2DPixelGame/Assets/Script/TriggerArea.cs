@@ -11,6 +11,7 @@ public class TriggerArea : MonoBehaviour
         {
             stones[0].SetActive(false);
             stones[1].SetActive(false);
+            
         }
     }
 }
