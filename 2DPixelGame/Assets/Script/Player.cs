@@ -24,8 +24,10 @@ public class Player : MonoBehaviour
     [Header ("角色名稱"), Tooltip ("這是角色名稱")]
     public string cName = "熊咪"; //字串必須加上""
 
-    [Header ("血量"), Range(0,100)]
-    public float hp = 100f;
+    [Header ("血量"), Range(0,1000)]
+    public float hp = 200f;
+    private float hpMax;
+
     [Header ("攻擊"), Range(1,100)]
     public float attack = 20f;
     [Header ("經驗值"), Range(0, 100000)]
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour
     public AudioSource aud;
     [Header("攻擊音效")]
     public AudioClip soundAttack;
+    [Header("血條系統")]
+    public HpManager hpManager;
 
     // 事件 : 繪製圖示
     private void OnDrawGizmos()
@@ -71,7 +75,7 @@ public class Player : MonoBehaviour
         ani.SetFloat("垂直", v);
     }
 
-    //要被按鈕呼叫必須設公開
+    // 要被按鈕呼叫必須設公開
     public void Attack()
     {
         // 音效來源.播放一次(音效片段，音量）
@@ -95,9 +99,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Hit() 
+    // 要被其他腳本呼叫也要設公開
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Hit(float damage) 
     {
-    
+        hp -= damage;                              // 扣除傷害值
+        hpManager.UpdateHpBar(hp, hpMax);          // 更新血條
     }
 
     private void Dead()
@@ -111,6 +121,7 @@ public class Player : MonoBehaviour
     {
         //呼叫方法
         //方法名稱();
+        hpMax = hp;
     }
 
     // 更新事件 : 大約一秒執行六十次 60FPS
