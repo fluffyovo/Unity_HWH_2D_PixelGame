@@ -19,18 +19,15 @@ public class Player : MonoBehaviour
 
     [Header ("等級"), Tooltip("這是角色等級")]
     public int level = 1;
-    [Header ("移動速度"), Range (1,100)]
+    [Header ("等級文字")]
+    public Text lvText;
+    [Header ("移動速度"), Range (1, 100)]
     public float speed = 10.5f; //浮點數設定值後一定要加 f/F (大小寫不均)
-    [Header ("是否死亡")]
-    public bool isDead = false;
     [Header ("角色名稱"), Tooltip ("這是角色名稱")]
     public string cName = "熊咪"; //字串必須加上""
-
-    [Header ("血量"), Range(0,1000)]
+    [Header ("血量"), Range(0, 1000)]
     public float hp = 200f;
-    private float hpMax;
-
-    [Header ("攻擊"), Range(1,100)]
+    [Header ("攻擊"), Range(1, 100)]
     public float attack = 20f;
     [Header ("經驗值"), Range(0, 100000)]
     public int exp = 0;
@@ -50,6 +47,9 @@ public class Player : MonoBehaviour
     public AudioClip soundAttack;
     [Header("血條系統")]
     public HpManager hpManager;
+
+    private float hpMax;
+    private bool isDead = false;
 
     // 事件 : 繪製圖示
     private void OnDrawGizmos()
@@ -100,9 +100,14 @@ public class Player : MonoBehaviour
         if (hit && hit.collider.tag == "道具") 
         {
             hit.collider.GetComponent<item>().DropProp();
-            print("碰到的物件:" + hit.collider.name);
-
         }
+        
+        // 如果 碰到的物件 標籤 為 敵人 就 受傷
+        if (hit && hit.collider.tag == "敵人")
+        {
+            hit.collider.GetComponent<Enemy>().Hit(attack);
+        }
+
     }
 
     // 要被其他腳本呼叫也要設公開
@@ -141,8 +146,8 @@ public class Player : MonoBehaviour
     // 開始事件 : 播放後執行一次
     private void Start()
     {
-        //呼叫方法
-        //方法名稱();
+        // 呼叫方法
+        // 方法名稱();
         hpMax = hp;
     }
 

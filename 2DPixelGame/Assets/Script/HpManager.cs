@@ -35,6 +35,6 @@ public class HpManager : MonoBehaviour
             yield return new WaitForSeconds(0.025f);               // 等待幾秒(秒數)
         }
 
-        Destroy(rect.gameObject, 0.3f);
+        Destroy(rect.gameObject, 0.3f);                            // 0.3秒後刪除傷害數值物件
     }
 }

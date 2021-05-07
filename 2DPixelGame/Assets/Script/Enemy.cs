@@ -16,14 +16,17 @@ public class Enemy : MonoBehaviour
     public float attack = 10;
     [Header("血量"), Range(0, 1000)]
     public float hp = 200f;
-    private float hpMax;
     [Header("血條系統")]
     public HpManager hpManager;
+    [Header("提供經驗值"), Range(0, 1000)]
+    public float exp = 30;
 
-
+    private float hpMax;
+    private bool isDead = false;
 
     // 存取玩家位置資料
     private Transform player;
+    private Player _player;
     /// <summary>
     /// 計時器
     /// </summary>
@@ -31,9 +34,11 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        hpMax = hp;      //取得血量最大值
+        
         // 玩家位置 = 抓取場景的玩家物件 的 位置
         player = GameObject.Find("玩家").transform;
-        hpMax = hp;
+        _player = player.GetComponent<Player>();
     }
 
     // 繪製圖示事件 : 在Unity內顯示輔助開發
@@ -58,6 +63,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Track()
     {
+        if (isDead) return;           //如果死亡 就跳出
+
         // 兩者間的距離 = 三維向量 的 距離(Ａ點，Ｂ點)
         float dis = Vector3.Distance(transform.position, player.position);
         
@@ -86,10 +93,33 @@ public class Enemy : MonoBehaviour
             timer = 0;              // 計時器 歸零
             psAttack.Play();        // 播放 攻擊特效
 
-            // 2D 碰撞 = 2D 物理.覆蓋圓形範圍 (中心點，半徑)
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, rangeAttack);
+            // 2D 碰撞 = 2D 物理.覆蓋圓形範圍 (中心點，半徑，圖層)
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, rangeAttack, 1<<9);
             // 碰到的物件 取得元件<玩家>().受傷(攻擊力)
             hit.GetComponent<Player>().Hit(attack);
         }
+    }
+
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="Pdamage"></param>
+    public void Hit(float Pdamage)
+    {
+        hp -= Pdamage;                                    // 扣除傷害值
+        hpManager.UpdateHpBar(hp, hpMax);                 // 更新血條
+        StartCoroutine(hpManager.ShowDamage(Pdamage));    // 啟動協同程序(顯示傷害值())
+
+        if (hp <= 0) Dead();                              // 如果血量 <= 0 就死亡
+    }
+
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    private void Dead()
+    {
+        hp = 0;
+        isDead = true;
+        Destroy(gameObject, 1.5f);
     }
 }
