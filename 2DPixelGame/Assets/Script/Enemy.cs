@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour
     public float cdAttack = 3;
     [Header("攻擊力"), Range(0, 100)]
     public float attack = 10;
+    [Header("血量"), Range(0, 1000)]
+    public float hp = 200f;
+    private float hpMax;
+    [Header("血條系統")]
+    public HpManager hpManager;
+
 
 
     // 存取玩家位置資料
@@ -27,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         // 玩家位置 = 抓取場景的玩家物件 的 位置
         player = GameObject.Find("玩家").transform;
+        hpMax = hp;
     }
 
     // 繪製圖示事件 : 在Unity內顯示輔助開發
