@@ -149,6 +149,49 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("遊戲場景");
     }
 
+    /// <summary>
+    /// 經驗值控制
+    /// </summary>
+    /// <param name="getExp">得到的經驗值</param>
+    public void Exp(float getExp)
+    {
+        // 取得目前等級需要的經驗需求
+        // 要取得的資料為 等級 減1
+        expNeed = expData.exp[level - 1];
+
+        exp += getExp;
+        print("經驗值:" + exp);
+        imgExp.fillAmount = exp / expNeed;
+
+        // 升級
+        // 迴圈 while
+        // 語法:
+        // while（布林值）｛布林值　為　true 時持續執行｝
+        // if（布林值）｛布林值　為　true 時執行一次｝
+        while (exp >= expNeed)                       // 如果經驗值 >= 經驗需求
+        {
+            level++;                             // 等級提升
+            lvText.text = "Lv. " + level;         // 介面更新
+            exp -= expNeed;                       // 補回溢出的經驗
+            imgExp.fillAmount = exp / expNeed;    // 介面更新
+            expNeed = expData.exp[level - 1];
+            LevelUp();                            // 呼叫升級方法
+        }
+    }
+
+    /// <summary>
+    /// 升級後的數據更新
+    /// </summary>
+    private void LevelUp()
+    {
+        // 攻擊力每一等提升 10，從 預設attack(20) 開始
+        attack = 20 + (level - 1) * 10;
+        // 血量上限每一等提升 50，從 預設hp(200) 開始
+        hpMax = 200 + (level - 1) * 50;
+
+        hp = hpMax;                         // 恢復血量全滿
+        hpManager.UpdateHpBar(hp, hpMax);   // 更新血條
+    }
     #endregion
 
     #region 事件
@@ -161,10 +204,10 @@ public class Player : MonoBehaviour
         // 方法名稱();
         hpMax = hp;
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 99; i++)
         {
             expData.exp[i] = (i + 1 ) * 100;
-            print(i);
+            //print(i);
         }
     }
 
@@ -195,33 +238,6 @@ public class Player : MonoBehaviour
         //繪製圖示 球體(中心點，半徑)
         Gizmos.DrawSphere(transform.position, rangeAttack);
     }
-
-    /// <summary>
-    /// 經驗值控制
-    /// </summary>
-    /// <param name="getExp"></param>
-    public void Exp(float getExp)
-    {
-        // 取得目前等級需要的經驗需求
-        // 要取得的資料為 等級 減1
-        expNeed = expData.exp[level - 1];
-
-        exp += getExp;
-        print("經驗值:" + exp);
-        imgExp.fillAmount = exp / expNeed;
-
-        // 升級
-        // 迴圈 while
-        // 語法:
-        // while（布林值）｛布林值　為　true 時持續執行｝
-        // if（布林值）｛布林值　為　true 時執行一次｝
-        while (exp >= expNeed)                       // 如果經驗值 >= 經驗需求
-        {
-            level ++;                             // 等級提升
-            lvText.text = "Lv. " + level;         // 介面更新
-            exp -= expNeed;                       // 補回溢出的經驗
-            imgExp.fillAmount = exp / expNeed;    // 介面更新
-        }
-    }
+ 
     #endregion
 }
