@@ -2,6 +2,7 @@
 
 public class Enemy : MonoBehaviour
 {
+    #region 欄位
     [Header("追蹤範圍"), Range(0, 50)]
     public float rangeTrack = 3;
     [Header("攻擊範圍"), Range(0, 50)]
@@ -24,14 +25,15 @@ public class Enemy : MonoBehaviour
     private float hpMax;
     private bool isDead = false;
 
-    // 存取玩家位置資料
-    private Transform player;
-    private Player _player;
+    private Transform player;           // 存取玩家位置資料
+    private Player _player;             // 存取玩家C#腳本
     /// <summary>
     /// 計時器
     /// </summary>
     private float timer;
+    #endregion
 
+    #region 事件
     private void Start()
     {
         hpMax = hp;      //取得血量最大值
@@ -57,7 +59,9 @@ public class Enemy : MonoBehaviour
     {
         Track();
     }
+    #endregion
 
+    #region 方法
     /// <summary>
     /// 追蹤玩家
     /// </summary>
@@ -106,6 +110,7 @@ public class Enemy : MonoBehaviour
     /// <param name="Pdamage"></param>
     public void Hit(float Pdamage)
     {
+        if (isDead) return;
         hp -= Pdamage;                                    // 扣除傷害值
         hpManager.UpdateHpBar(hp, hpMax);                 // 更新血條
         StartCoroutine(hpManager.ShowDamage(Pdamage));    // 啟動協同程序(顯示傷害值())
@@ -118,8 +123,11 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        if (isDead) return;
         hp = 0;
         isDead = true;
         Destroy(gameObject, 1.5f);
+        _player.Exp(exp);
     }
+    #endregion
 }

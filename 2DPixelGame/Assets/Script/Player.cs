@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     //布林值 bool true 是、flase 否
     //字串   string
 
+    #region 欄位
     [Header ("等級"), Tooltip("這是角色等級")]
     public int level = 1;
     [Header ("等級文字")]
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
     [Header ("攻擊"), Range(1, 100)]
     public float attack = 20f;
     [Header ("經驗值"), Range(0, 100000)]
-    public int exp = 0;
+    public float exp = 0;
     [Header("金幣"), Range(0, 100000)]
     public int coin = 0;
     [Header("虛擬搖桿")]
@@ -47,19 +48,25 @@ public class Player : MonoBehaviour
     public AudioClip soundAttack;
     [Header("血條系統")]
     public HpManager hpManager;
+    [Header("吃金幣音效")]
+    public AudioClip SoundEat;
+    [Header("吃金幣數量")]
+    public Text textCoin;
+    [Header("經驗值吧條")]
+    public Image imgExp;
+    [Header("經驗值資料")]
+    public ExpData expData;
 
     private float hpMax;
     private bool isDead = false;
+    /// <summary>
+    /// 需要多少經驗值才能升等，一等設定為100
+    /// </summary>
+    private float expNeed = 100;
 
-    // 事件 : 繪製圖示
-    private void OnDrawGizmos()
-    {
-        //指定圖示顏色 (紅，綠，藍，透明）
-        Gizmos.color = new Color(1, 0, 0, 0.2f);
-        //繪製圖示 球體(中心點，半徑)
-        Gizmos.DrawSphere(transform.position, rangeAttack);
-    }
+    #endregion
 
+    #region 方法
     // 方法語法 Method - 儲存複雜的程式區塊或演算法
     // 修飾詞 類型 名稱() { 程式區塊或演算法}
     // void 無類型
@@ -142,13 +149,23 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("遊戲場景");
     }
 
+    #endregion
+
+    #region 事件
     // 事件 - 特定時間會執行方法
+
     // 開始事件 : 播放後執行一次
     private void Start()
     {
         // 呼叫方法
         // 方法名稱();
         hpMax = hp;
+
+        for (int i = 0; i < 10; i++)
+        {
+            expData.exp[i] = (i + 1 ) * 100;
+            print(i);
+        }
     }
 
     // 更新事件 : 大約一秒執行六十次 60FPS
@@ -156,11 +173,6 @@ public class Player : MonoBehaviour
     {
         Move();
     }
-
-    [Header("吃金幣音效")]
-    public AudioClip SoundEat;
-    [Header("吃金幣數量")]
-    public Text textCoin;
 
     // 觸發事件 - 進入：兩個物件必須有一個勾選Is Trigger
     private void OnTriggerEnter2D(Collider2D collision)
@@ -174,4 +186,42 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    // 事件 : 繪製圖示
+    private void OnDrawGizmos()
+    {
+        //指定圖示顏色 (紅，綠，藍，透明）
+        Gizmos.color = new Color(1, 0, 0, 0.2f);
+        //繪製圖示 球體(中心點，半徑)
+        Gizmos.DrawSphere(transform.position, rangeAttack);
+    }
+
+    /// <summary>
+    /// 經驗值控制
+    /// </summary>
+    /// <param name="getExp"></param>
+    public void Exp(float getExp)
+    {
+        // 取得目前等級需要的經驗需求
+        // 要取得的資料為 等級 減1
+        expNeed = expData.exp[level - 1];
+
+        exp += getExp;
+        print("經驗值:" + exp);
+        imgExp.fillAmount = exp / expNeed;
+
+        // 升級
+        // 迴圈 while
+        // 語法:
+        // while（布林值）｛布林值　為　true 時持續執行｝
+        // if（布林值）｛布林值　為　true 時執行一次｝
+        while (exp >= expNeed)                       // 如果經驗值 >= 經驗需求
+        {
+            level ++;                             // 等級提升
+            lvText.text = "Lv. " + level;         // 介面更新
+            exp -= expNeed;                       // 補回溢出的經驗
+            imgExp.fillAmount = exp / expNeed;    // 介面更新
+        }
+    }
+    #endregion
 }
