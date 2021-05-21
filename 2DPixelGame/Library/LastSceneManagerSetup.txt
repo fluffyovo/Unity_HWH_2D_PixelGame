@@ -1,5 +1,5 @@
 sceneSetups:
-- path: "C:/Users/User/Downloads/Unity_HWH_ParticleSystemPart2/ParticleSystemPart2/Assets/\u5834\u666F/2_\u6280\u80FD.unity"
+- path: "Assets/\u5834\u666F/\u904A\u6232\u5834\u666F.unity"
   isLoaded: 1
   isActive: 1
   isSubScene: 0

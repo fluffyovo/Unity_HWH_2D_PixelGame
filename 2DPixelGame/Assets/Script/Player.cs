@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     [Header("經驗值資料")]
     public ExpData expData;
 
+    public float attackWeapon;
     private float hpMax;
     private bool isDead = false;
     /// <summary>
@@ -103,17 +104,12 @@ public class Player : MonoBehaviour
         print("碰到的物件:" + hit.collider.name);
         */
 
-        // 如果 碰到的物件 標籤 為 道具 就 取得道具腳本並呼叫掉落道具方法
-        if (hit && hit.collider.tag == "道具") 
-        {
-            hit.collider.GetComponent<item>().DropProp();
-        }
-        
-        // 如果 碰到的物件 標籤 為 敵人 就 受傷
-        if (hit && hit.collider.tag == "敵人")
-        {
-            hit.collider.GetComponent<Enemy>().Hit(attack);
-        }
+        // 如果 碰到的物件存在 並且 標籤 為 道具 就 取得道具腳本並呼叫掉落道具方法
+        if (hit && hit.collider.tag == "道具") hit.collider.GetComponent<item>().DropProp();
+        // 如果 打到的標籤是 敵人 就 受傷
+        if (hit && hit.collider.tag == "敵人") hit.collider.GetComponent<Enemy>().Hit(attack + attackWeapon);
+        // 如果 打到的標籤是 NPC 就 開啟商店
+        if (hit && hit.collider.tag == "NPC") hit.collider.GetComponent<NPC>().OpenShop();
 
     }
 
@@ -200,8 +196,9 @@ public class Player : MonoBehaviour
     // 開始事件 : 播放後執行一次
     private void Start()
     {
-        // 呼叫方法
-        // 方法名稱();
+        coin = 10;
+        textCoin.text = "金幣：" + 10;
+
         hpMax = hp;
 
         for (int i = 0; i < 99; i++)
